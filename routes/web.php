@@ -14,7 +14,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/print', function () use ($router) {
-  return (new Response(__FILE__, 200))
+  return (new Response(file_get_contents(__FILE__), 200))
     ->header('Content-Type', 'text/plain; charset=utf-8');
 });
 
