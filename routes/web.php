@@ -1,6 +1,6 @@
 <?php
 
-$router->get('/', function () use ($router) {
+$router->get('/?*', function () use ($router) {
     $date = new class
     {
         function getTime()
