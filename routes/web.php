@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Response;
+
 $router->get('/', function () use ($router) {
   $date = new class
   {
@@ -12,15 +14,15 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/print', function () use ($router) {
-  header('Content-Type: text/plain; charset=utf-8');
-  return file_get_contents(basename(__FILE__));
+  return (new Response(file_get_contents(basename(__FILE__)), 200))
+    ->header('Content-Type', 'text/plain; charset=utf-8');
 });
 
 $router->get('/print/public', function () use ($router) {
-  header('Content-Type: text/plain; charset=utf-8');
-  header('Access-Control-Allow-Origin: *');
-  header('Access-Control-Allow-Methods: GET, POST, DELETE');
-  return file_get_contents(basename(__FILE__));
+  return (new Response(file_get_contents(basename(__FILE__)), 200))
+    ->header('Content-Type', 'text/plain; charset=utf-8')
+    ->header('Access-Control-Allow-Origin', '*')
+    ->header('Access-Control-Allow-Methods', 'GET, POST, DELETE');
 });
 
 $router->get('/hello/{name}', function ($name) {
