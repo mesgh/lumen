@@ -14,9 +14,8 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/print', function () use ($router) {
-  return (new Response())
-    ->header('Content-Type', 'text/plain; charset=utf-8')
-    ->download(__FILE__);
+  return (new Response("__FILE__"))
+    ->header('Content-Type', 'text/plain; charset=utf-8');
 });
 
 $router->get('/print/public', function () use ($router) {
