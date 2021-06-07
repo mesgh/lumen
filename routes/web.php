@@ -1,12 +1,6 @@
 <?php
 
-$router->get('/hello/{name}', function ($name) {
-    return '<h1>Hello ' . $name . '!</h1>';
-});
-$router->get('/date', function () {
-    return '<h1>' . date('r') . '</h1>';
-});
-$router->get('/*', function () use ($router) {
+$router->get('/', function () use ($router) {
     $date = new class
     {
         function getTime()
@@ -14,7 +8,11 @@ $router->get('/*', function () use ($router) {
             return date('d/m/Y H:i');
         }
     };
+    return '<h1>' . $date->getTime() . '</h1>';
+});
 
+$router->get('/?{print}[&public]}', function ($print, $public) use ($router) {
+    var_dump($print, $public);
     if (isset($_GET['print'])) {
         header('Content-Type: text/plain; charset=utf-8');
         if (isset($_GET['public'])) {
@@ -22,7 +20,13 @@ $router->get('/*', function () use ($router) {
             header('Access-Control-Allow-Methods: GET, POST, DELETE');
         }
         return file_get_contents(basename(__FILE__));
-    } else {
-        return '<h1>' . $date->getTime() . '</h1>';
     }
+});
+
+$router->get('/hello/{name}', function ($name) {
+    return '<h1>Hello ' . $name . '!</h1>';
+});
+
+$router->get('/date', function () {
+    return '<h1>' . date('r') . '</h1>';
 });
