@@ -1,6 +1,12 @@
 <?php
 
-$router->get('/?*', function () use ($router) {
+$router->get('/hello/{name}', function ($name) {
+    return '<h1>Hello ' . $name . '!</h1>';
+});
+$router->get('/date', function () {
+    return '<h1>' . date('r') . '</h1>';
+});
+$router->get('/*', function () use ($router) {
     $date = new class
     {
         function getTime()
@@ -19,10 +25,4 @@ $router->get('/?*', function () use ($router) {
     } else {
         return '<h1>' . $date->getTime() . '</h1>';
     }
-});
-$router->get('/hello/{name}', function ($name) {
-    return '<h1>Hello ' . $name . '!</h1>';
-});
-$router->get('/date', function () {
-    return '<h1>' . date('r') . '</h1>';
 });
